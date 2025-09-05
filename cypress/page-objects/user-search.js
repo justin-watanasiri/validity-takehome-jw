@@ -23,6 +23,7 @@ const emailInput = '[data-cy="email-input"]';
 const educationLevelDropdown = '[data-cy="education-level-dropdown"]';
 const educationLevelDropdownContent = '[data-cy="education-level-dropdown-content"]';
 const educationLevelOption = '[data-cy="education-level-option"]';
+const nextButton = '[data-cy="next-button"]';
 
 const VALID_EDUCATION_LEVELS = ["High School", "College", "Advanced Degree"];
 
@@ -205,4 +206,12 @@ export const selectEducationLevel = (level) => {
     .contains(educationLevelOption, level)
     .should("be.visible")
     .click();
+};
+
+/**
+ * Gets the Next button element.
+ * @returns {Cypress.Chainable<JQuery<HTMLElement>>}
+ */
+export const getNextButton = () => {
+  return cy.get(nextButton);
 };
