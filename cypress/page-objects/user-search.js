@@ -63,3 +63,21 @@ export const selectCategories = (categories) => {
   // Clicking the body is a common way to close a dropdown.
   cy.get("body").click(0, 0);
 };
+
+/**
+ * Fills the SSN input field.
+ * This function dynamically waits for the SSN field to become visible before typing.
+ * No input validation is performed to allow for negative testing.
+ *
+ * @param {string | number} ssn - The value to enter into the SSN field.
+ */
+export const fillSSN = (ssn) => {
+  // Using a placeholder selector. This should be updated to match the application's DOM.
+  const ssnInput = '[data-cy="ssn-input"]';
+
+  // Dynamically wait for the input to be visible, clear it, and then type.
+  // This will wait up to 10 seconds for the element to appear and be visible.
+  // If an invalid type is passed to .type() (e.g., null), Cypress will throw an error.
+  // This is the desired behavior for negative testing, so no validation is added here.
+  cy.get(ssnInput, { timeout: 10000 }).should("be.visible").clear().type(ssn);
+};
