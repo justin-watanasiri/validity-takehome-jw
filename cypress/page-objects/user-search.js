@@ -1,15 +1,33 @@
+const VALID_CATEGORIES = [
+  "ID",
+  "Personal Info",
+  "General Info",
+  "Contact Info",
+];
+
 /**
  * Selects multiple categories from the category dropdown.
  * This function is designed to be modular and handle various dropdown behaviors
  * like delayed rendering and spinners, based on "behind the scenes QA knowledge".
  *
- * @param {string[]} categories - An array of category labels to select (e.g., ['ID', 'Personal Info']).
+ * @param {('ID'|'Personal Info'|'General Info'|'Contact Info')[]} categories - An array of category labels to select.
  */
 export const selectCategories = (categories) => {
   if (!Array.isArray(categories) || categories.length === 0) {
     // Proper error handling with a custom message as requested.
     throw new Error(
       "selectCategories expects a non-empty array of category strings."
+    );
+  }
+
+  const invalidCategories = categories.filter(
+    (cat) => !VALID_CATEGORIES.includes(cat)
+  );
+  if (invalidCategories.length > 0) {
+    throw new Error(
+      `Invalid categories provided: ${invalidCategories.join(
+        ", "
+      )}. Valid categories are: ${VALID_CATEGORIES.join(", ")}.`
     );
   }
 
