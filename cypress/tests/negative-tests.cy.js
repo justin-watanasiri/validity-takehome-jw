@@ -6,6 +6,8 @@ import {
   fillFavoriteFood,
   fillFavoriteJob,
   fillSSN,
+  deselectCategories,
+  getSsnInput,
 } from "../page-objects/user-search";
 
 describe("Negative User Search Scenarios", () => {
@@ -50,5 +52,17 @@ describe("Negative User Search Scenarios", () => {
     // This also covers scenarios where the form might have client-side validation
     // that prevents the button from being enabled with invalid data.
     getNextButton().should("be.disabled");
+  });
+
+  it("removes fields when a category is deselected", () => {
+    // Select a category and verify its required field appears.
+    selectCategories(["ID"]);
+    getSsnInput().should("be.visible");
+
+    // Deselect the category.
+    deselectCategories(["ID"]);
+
+    // Verify the required field is now gone.
+    getSsnInput().should("not.exist");
   });
 });

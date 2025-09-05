@@ -25,6 +25,7 @@ const educationLevelDropdown = '[data-cy="education-level-dropdown"]';
 const educationLevelDropdownContent = '[data-cy="education-level-dropdown-content"]';
 const educationLevelOption = '[data-cy="education-level-option"]';
 const nextButton = '[data-cy="next-button"]';
+const selectedCategoryBadge = '[data-cy="selected-category-badge"]';
 
 /**
  * Selects multiple categories from the category dropdown.
@@ -76,6 +77,68 @@ export const selectCategories = (categories) => {
 
   // 4. Close the dropdown to mimic a user finishing their selection.
   // Clicking the body is a common way to close a dropdown.
+  cy.get("body").click(0, 0);
+};
+
+/**
+ * Deselects multiple categories from the category dropdown.
+ * This function is designed to be modular and handle various dropdown behaviors.
+ * It will throw an error if attempting to deselect a category that is not currently selected.
+ *
+ * @param {('ID'|'Personal Info'|'General Info'|'Contact Info')[]} categories - An array of category labels to deselect.
+ */
+export const deselectCategories = (categories) => {
+  if (!Array.isArray(categories) || categories.length === 0) {
+    throw new Error(
+      "deselectCategories expects a non-empty array of category strings."
+    );
+  }
+
+  const invalidCategories = categories.filter(
+    (cat) => !VALID_CATEGORIES.includes(cat)
+  );
+  if (invalidCategories.length > 0) {
+    throw new Error(
+      `Invalid categories provided: ${invalidCategories.join(
+        ", "
+      )}. Valid categories are: ${VALID_CATEGORIES.join(", ")}.`
+    );
+  }
+
+  // Verify categories are selected before attempting to deselect.
+  categories.forEach((category) => {
+    cy.get("body").then(($body) => {
+      if (
+        $body.find(`${selectedCategoryBadge}:contains("${category}")`).length ===
+        0
+      ) {
+        throw new Error(
+          `Category "${category}" is not selected and cannot be deselected.`
+        );
+      }
+    });
+  });
+
+  // 1. Interact with the dropdown like a user would.
+  cy.get(dropdownTrigger).click();
+
+  // 2. Dynamically wait for the dropdown content to be ready.
+  cy.get("body").then(($body) => {
+    if ($body.find(spinner).length > 0) {
+      cy.get(spinner, { timeout: 10000 }).should("not.exist");
+    }
+  });
+  cy.get(dropdownContent).should("be.visible");
+
+  // 3. Deselect each category from the provided array.
+  categories.forEach((category) => {
+    cy.get(dropdownContent)
+      .contains(dropdownOption, category)
+      .should("be.visible")
+      .click();
+  });
+
+  // 4. Close the dropdown to mimic a user finishing their selection.
   cy.get("body").click(0, 0);
 };
 
@@ -212,4 +275,12 @@ export const selectEducationLevel = (level) => {
  */
 export const getNextButton = () => {
   return cy.get(nextButton);
+};
+
+/**
+ * Gets the SSN input element.
+ * @returns {Cypress.Chainable<JQuery<HTMLElement>>}
+ */
+export const getSsnInput = () => {
+  return cy.get(ssnInput);
 };
