@@ -11,6 +11,20 @@ const dropdownContent = '[data-cy="categories-dropdown-content"]';
 const dropdownOption = '[data-cy="category-option"]';
 const spinner = '[data-cy="spinner"]';
 const ssnInput = '[data-cy="ssn-input"]';
+const firstNameInput = '[data-cy="first-name-input"]';
+const lastNameInput = '[data-cy="last-name-input"]';
+const addressInput = '[data-cy="address-input"]';
+const ageInput = '[data-cy="age-input"]';
+const jobInput = '[data-cy="job-input"]';
+const favoriteFoodInput = '[data-cy="favorite-food-input"]';
+const favoriteJobInput = '[data-cy="favorite-job-input"]';
+const phoneInput = '[data-cy="phone-input"]';
+const emailInput = '[data-cy="email-input"]';
+const educationLevelDropdown = '[data-cy="education-level-dropdown"]';
+const educationLevelDropdownContent = '[data-cy="education-level-dropdown-content"]';
+const educationLevelOption = '[data-cy="education-level-option"]';
+
+const VALID_EDUCATION_LEVELS = ["High School", "College", "Advanced Degree"];
 
 /**
  * Selects multiple categories from the category dropdown.
@@ -78,4 +92,117 @@ export const fillSSN = (ssn) => {
   // If an invalid type is passed to .type() (e.g., null), Cypress will throw an error.
   // This is the desired behavior for negative testing, so no validation is added here.
   cy.get(ssnInput, { timeout: 10000 }).should("be.visible").clear().type(ssn);
+};
+
+/**
+ * Fills the First Name input field.
+ * @param {string | number} firstName - The value to enter.
+ */
+export const fillFirstName = (firstName) => {
+  cy.get(firstNameInput, { timeout: 10000 })
+    .should("be.visible")
+    .clear()
+    .type(firstName);
+};
+
+/**
+ * Fills the Last Name input field.
+ * @param {string | number} lastName - The value to enter.
+ */
+export const fillLastName = (lastName) => {
+  cy.get(lastNameInput, { timeout: 10000 })
+    .should("be.visible")
+    .clear()
+    .type(lastName);
+};
+
+/**
+ * Fills the Address input field.
+ * @param {string | number} address - The value to enter.
+ */
+export const fillAddress = (address) => {
+  cy.get(addressInput, { timeout: 10000 })
+    .should("be.visible")
+    .clear()
+    .type(address);
+};
+
+/**
+ * Fills the Age input field.
+ * @param {string | number} age - The value to enter.
+ */
+export const fillAge = (age) => {
+  cy.get(ageInput, { timeout: 10000 }).should("be.visible").clear().type(age);
+};
+
+/**
+ * Fills the Job input field.
+ * @param {string | number} job - The value to enter.
+ */
+export const fillJob = (job) => {
+  cy.get(jobInput, { timeout: 10000 }).should("be.visible").clear().type(job);
+};
+
+/**
+ * Fills the Favorite Food input field.
+ * @param {string | number} food - The value to enter.
+ */
+export const fillFavoriteFood = (food) => {
+  cy.get(favoriteFoodInput, { timeout: 10000 })
+    .should("be.visible")
+    .clear()
+    .type(food);
+};
+
+/**
+ * Fills the Favorite Job input field.
+ * @param {string | number} job - The value to enter.
+ */
+export const fillFavoriteJob = (job) => {
+  cy.get(favoriteJobInput, { timeout: 10000 })
+    .should("be.visible")
+    .clear()
+    .type(job);
+};
+
+/**
+ * Fills the Phone input field.
+ * @param {string | number} phone - The value to enter.
+ */
+export const fillPhone = (phone) => {
+  cy.get(phoneInput, { timeout: 10000 })
+    .should("be.visible")
+    .clear()
+    .type(phone);
+};
+
+/**
+ * Fills the Email input field.
+ * @param {string | number} email - The value to enter.
+ */
+export const fillEmail = (email) => {
+  cy.get(emailInput, { timeout: 10000 })
+    .should("be.visible")
+    .clear()
+    .type(email);
+};
+
+/**
+ * Selects an education level from the dropdown.
+ * @param {('High School'|'College'|'Advanced Degree')} level - The education level to select.
+ */
+export const selectEducationLevel = (level) => {
+  if (!VALID_EDUCATION_LEVELS.includes(level)) {
+    throw new Error(
+      `Invalid education level: ${level}. Valid options are: ${VALID_EDUCATION_LEVELS.join(
+        ", "
+      )}.`
+    );
+  }
+
+  cy.get(educationLevelDropdown).click();
+  cy.get(educationLevelDropdownContent)
+    .contains(educationLevelOption, level)
+    .should("be.visible")
+    .click();
 };
