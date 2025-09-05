@@ -53,26 +53,31 @@ export const selectCategories = (categories) => {
     );
   }
 
+  // Intercept network calls to handle dynamic content and avoid flakiness.
+  // Using placeholder endpoints. These should be updated to match the application's API.
+  cy.intercept("GET", "**/api/categories/options").as("getCategoryOptions");
+
   // 1. Interact with the dropdown like a user would.
   cy.get(dropdownTrigger).click();
 
-  // 2. Dynamically wait for the dropdown content to be ready.
-  // This waits for the dropdown to open and for any network calls (via spinner) to complete.
-  cy.get("body").then(($body) => {
-    if ($body.find(spinner).length > 0) {
-      cy.get(spinner, { timeout: 10000 }).should("not.exist");
-    }
-  });
+  // 2. Wait for the dropdown options to load.
+  cy.wait("@getCategoryOptions");
   cy.get(dropdownContent).should("be.visible");
 
   // 3. Select each category from the provided array.
   categories.forEach((category) => {
+    // Intercept the call that updates the form fields after a selection.
+    cy.intercept("POST", "**/api/fields").as("updateFields");
+
     // Find the option by its text, ensure it's visible, then click.
     // This avoids issues with detached DOM elements during re-renders.
     cy.get(dropdownContent)
       .contains(dropdownOption, category)
       .should("be.visible")
       .click();
+
+    // Wait for the fields to be updated before proceeding.
+    cy.wait("@updateFields");
   });
 
   // 4. Close the dropdown to mimic a user finishing their selection.
@@ -119,23 +124,29 @@ export const deselectCategories = (categories) => {
     });
   });
 
+  // Intercept network calls to handle dynamic content and avoid flakiness.
+  // Using placeholder endpoints. These should be updated to match the application's API.
+  cy.intercept("GET", "**/api/categories/options").as("getCategoryOptions");
+
   // 1. Interact with the dropdown like a user would.
   cy.get(dropdownTrigger).click();
 
-  // 2. Dynamically wait for the dropdown content to be ready.
-  cy.get("body").then(($body) => {
-    if ($body.find(spinner).length > 0) {
-      cy.get(spinner, { timeout: 10000 }).should("not.exist");
-    }
-  });
+  // 2. Wait for the dropdown options to load.
+  cy.wait("@getCategoryOptions");
   cy.get(dropdownContent).should("be.visible");
 
   // 3. Deselect each category from the provided array.
   categories.forEach((category) => {
+    // Intercept the call that updates the form fields after a deselection.
+    cy.intercept("POST", "**/api/fields").as("updateFields");
+
     cy.get(dropdownContent)
       .contains(dropdownOption, category)
       .should("be.visible")
       .click();
+
+    // Wait for the fields to be updated before proceeding.
+    cy.wait("@updateFields");
   });
 
   // 4. Close the dropdown to mimic a user finishing their selection.
