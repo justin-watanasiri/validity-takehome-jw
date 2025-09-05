@@ -18,7 +18,7 @@ const addressInput = '[data-cy="address-input"]';
 const ageInput = '[data-cy="age-input"]';
 const jobInput = '[data-cy="job-input"]';
 const favoriteFoodInput = '[data-cy="favorite-food-input"]';
-const favoriteJobInput = '[data-cy="favorite-job-input"]';
+const favoriteBookInput = '[data-cy="favorite-book-input"]';
 const phoneInput = '[data-cy="phone-input"]';
 const emailInput = '[data-cy="email-input"]';
 const educationLevelDropdown = '[data-cy="education-level-dropdown"]';
@@ -217,14 +217,14 @@ export const fillFavoriteFood = (food) => {
 };
 
 /**
- * Fills the Favorite Job input field.
- * @param {string | number} job - The value to enter.
+ * Fills the Favorite Book input field.
+ * @param {string | number} book - The value to enter.
  */
-export const fillFavoriteJob = (job) => {
-  cy.get(favoriteJobInput, { timeout: 10000 })
+export const fillFavoriteBook = (book) => {
+  cy.get(favoriteBookInput, { timeout: 10000 })
     .should("be.visible")
     .clear()
-    .type(job);
+    .type(book);
 };
 
 /**
@@ -334,11 +334,11 @@ export const getFavoriteFoodInput = () => {
 };
 
 /**
- * Gets the Favorite Job input element.
+ * Gets the Favorite Book input element.
  * @returns {Cypress.Chainable<JQuery<HTMLElement>>}
  */
-export const getFavoriteJobInput = () => {
-  return cy.get(favoriteJobInput);
+export const getFavoriteBookInput = () => {
+  return cy.get(favoriteBookInput);
 };
 
 /**

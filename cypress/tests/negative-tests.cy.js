@@ -4,7 +4,7 @@ import {
   fillAge,
   selectEducationLevel,
   fillFavoriteFood,
-  fillFavoriteJob,
+  fillFavoriteBook,
   fillSSN,
   deselectCategories,
   getSsnInput,
@@ -35,7 +35,7 @@ describe("Negative User Search Scenarios", () => {
 
     // Fill only optional fields
     fillFavoriteFood("Pizza");
-    fillFavoriteJob("QA Engineer");
+    fillFavoriteBook("The Hitchhiker's Guide to the Galaxy");
 
     // The button should remain disabled because required fields are missing.
     getNextButton().should("be.disabled");

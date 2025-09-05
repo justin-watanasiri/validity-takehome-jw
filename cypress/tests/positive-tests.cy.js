@@ -16,7 +16,7 @@ import {
   getEducationLevelDropdown,
   getJobInput,
   getFavoriteFoodInput,
-  getFavoriteJobInput,
+  getFavoriteBookInput,
 } from "../page-objects/user-search";
 
 describe("Positive User Search Scenarios", () => {
@@ -81,7 +81,6 @@ describe("Positive User Search Scenarios", () => {
     selectCategories(["Personal Info", "General Info"]);
 
     // Verify all fields from both categories are visible.
-    // Note: 'Favorite Book' from requirements is represented by 'Favorite Job' in the current implementation.
     getFirstNameInput().should("be.visible");
     getLastNameInput().should("be.visible");
     getAddressInput().should("be.visible");
@@ -89,7 +88,7 @@ describe("Positive User Search Scenarios", () => {
     getAgeInput().should("be.visible");
     getJobInput().should("be.visible");
     getFavoriteFoodInput().should("be.visible");
-    getFavoriteJobInput().should("be.visible");
+    getFavoriteBookInput().should("be.visible");
 
     // Deselect one category
     deselectCategories(["General Info"]);
