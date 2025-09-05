@@ -4,6 +4,7 @@ const VALID_CATEGORIES = [
   "General Info",
   "Contact Info",
 ];
+const VALID_EDUCATION_LEVELS = ["High School", "College", "Advanced Degree"];
 
 // Using placeholder selectors. These should be updated to match the application's DOM.
 const dropdownTrigger = '[data-cy="categories-dropdown"]';
@@ -24,8 +25,6 @@ const educationLevelDropdown = '[data-cy="education-level-dropdown"]';
 const educationLevelDropdownContent = '[data-cy="education-level-dropdown-content"]';
 const educationLevelOption = '[data-cy="education-level-option"]';
 const nextButton = '[data-cy="next-button"]';
-
-const VALID_EDUCATION_LEVELS = ["High School", "College", "Advanced Degree"];
 
 /**
  * Selects multiple categories from the category dropdown.
@@ -91,7 +90,6 @@ export const fillSSN = (ssn) => {
   // Dynamically wait for the input to be visible, clear it, and then type.
   // This will wait up to 10 seconds for the element to appear and be visible.
   // If an invalid type is passed to .type() (e.g., null), Cypress will throw an error.
-  // This is the desired behavior for negative testing, so no validation is added here.
   cy.get(ssnInput, { timeout: 10000 }).should("be.visible").clear().type(ssn);
 };
 
