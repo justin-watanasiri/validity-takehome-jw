@@ -5,6 +5,13 @@ const VALID_CATEGORIES = [
   "Contact Info",
 ];
 
+// Using placeholder selectors. These should be updated to match the application's DOM.
+const dropdownTrigger = '[data-cy="categories-dropdown"]';
+const dropdownContent = '[data-cy="categories-dropdown-content"]';
+const dropdownOption = '[data-cy="category-option"]';
+const spinner = '[data-cy="spinner"]';
+const ssnInput = '[data-cy="ssn-input"]';
+
 /**
  * Selects multiple categories from the category dropdown.
  * This function is designed to be modular and handle various dropdown behaviors
@@ -30,12 +37,6 @@ export const selectCategories = (categories) => {
       )}. Valid categories are: ${VALID_CATEGORIES.join(", ")}.`
     );
   }
-
-  // Using placeholder selectors. These should be updated to match the application's DOM.
-  const dropdownTrigger = '[data-cy="categories-dropdown"]';
-  const dropdownContent = '[data-cy="categories-dropdown-content"]';
-  const dropdownOption = '[data-cy="category-option"]';
-  const spinner = '[data-cy="spinner"]';
 
   // 1. Interact with the dropdown like a user would.
   cy.get(dropdownTrigger).click();
@@ -72,9 +73,6 @@ export const selectCategories = (categories) => {
  * @param {string | number} ssn - The value to enter into the SSN field.
  */
 export const fillSSN = (ssn) => {
-  // Using a placeholder selector. This should be updated to match the application's DOM.
-  const ssnInput = '[data-cy="ssn-input"]';
-
   // Dynamically wait for the input to be visible, clear it, and then type.
   // This will wait up to 10 seconds for the element to appear and be visible.
   // If an invalid type is passed to .type() (e.g., null), Cypress will throw an error.
