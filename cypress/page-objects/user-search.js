@@ -284,3 +284,67 @@ export const getNextButton = () => {
 export const getSsnInput = () => {
   return cy.get(ssnInput);
 };
+
+/**
+ * Gets the First Name input element.
+ * @returns {Cypress.Chainable<JQuery<HTMLElement>>}
+ */
+export const getFirstNameInput = () => {
+  return cy.get(firstNameInput);
+};
+
+/**
+ * Gets the Last Name input element.
+ * @returns {Cypress.Chainable<JQuery<HTMLElement>>}
+ */
+export const getLastNameInput = () => {
+  return cy.get(lastNameInput);
+};
+
+/**
+ * Gets the Address input element.
+ * @returns {Cypress.Chainable<JQuery<HTMLElement>>}
+ */
+export const getAddressInput = () => {
+  return cy.get(addressInput);
+};
+
+/**
+ * Gets the Age input element.
+ * @returns {Cypress.Chainable<JQuery<HTMLElement>>}
+ */
+export const getAgeInput = () => {
+  return cy.get(ageInput);
+};
+
+/**
+ * Gets the Job input element.
+ * @returns {Cypress.Chainable<JQuery<HTMLElement>>}
+ */
+export const getJobInput = () => {
+  return cy.get(jobInput);
+};
+
+/**
+ * Gets the Favorite Food input element.
+ * @returns {Cypress.Chainable<JQuery<HTMLElement>>}
+ */
+export const getFavoriteFoodInput = () => {
+  return cy.get(favoriteFoodInput);
+};
+
+/**
+ * Gets the Favorite Job input element.
+ * @returns {Cypress.Chainable<JQuery<HTMLElement>>}
+ */
+export const getFavoriteJobInput = () => {
+  return cy.get(favoriteJobInput);
+};
+
+/**
+ * Gets the Education Level dropdown element.
+ * @returns {Cypress.Chainable<JQuery<HTMLElement>>}
+ */
+export const getEducationLevelDropdown = () => {
+  return cy.get(educationLevelDropdown);
+};

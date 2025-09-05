@@ -8,6 +8,15 @@ import {
   fillJob,
   fillPhone,
   fillEmail,
+  deselectCategories,
+  getFirstNameInput,
+  getLastNameInput,
+  getAddressInput,
+  getAgeInput,
+  getEducationLevelDropdown,
+  getJobInput,
+  getFavoriteFoodInput,
+  getFavoriteJobInput,
 } from "../page-objects/user-search";
 
 describe("Positive User Search Scenarios", () => {
@@ -65,5 +74,31 @@ describe("Positive User Search Scenarios", () => {
     getNextButton().should("be.disabled");
     fillEmail("test@example.com");
     getNextButton().should("be.enabled");
+  });
+
+  it("retains shared fields when a category with overlapping fields is deselected", () => {
+    // Select two categories that share fields (First Name, Last Name)
+    selectCategories(["Personal Info", "General Info"]);
+
+    // Verify all fields from both categories are visible.
+    // Note: 'Favorite Book' from requirements is represented by 'Favorite Job' in the current implementation.
+    getFirstNameInput().should("be.visible");
+    getLastNameInput().should("be.visible");
+    getAddressInput().should("be.visible");
+    getEducationLevelDropdown().should("be.visible");
+    getAgeInput().should("be.visible");
+    getJobInput().should("be.visible");
+    getFavoriteFoodInput().should("be.visible");
+    getFavoriteJobInput().should("be.visible");
+
+    // Deselect one category
+    deselectCategories(["General Info"]);
+
+    // Assert that fields from the remaining category ('Personal Info') are still visible
+    getFirstNameInput().should("be.visible");
+    getLastNameInput().should("be.visible");
+    getAddressInput().should("be.visible");
+    getEducationLevelDropdown().should("be.visible");
+    getAgeInput().should("be.visible");
   });
 });
